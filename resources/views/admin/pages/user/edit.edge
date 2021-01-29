@@ -1,0 +1,221 @@
+@layout('admin.layouts.app')
+
+@section('content')
+
+<link rel="stylesheet" href="/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+<div class="col-sm-12">
+  <ol class="breadcrumb float-sm-left">
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">Tài khoản</a></li>
+    <li class="breadcrumb-item active">{{ state.User.username }}</li>
+  </ol>
+</div>
+<div class="col-md-12 mt-3">
+  <div class="card card-primary card-outline card-outline-tabs">
+    <div class="card-header p-0 border-bottom-0">
+      <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="pill" href="#user-edit" role="tab">Tài khoản</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="pill" href="#services" role="tab">Tất cả dịch vụ</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content" id="custom-tabs-four-tabContent">
+        <div class="tab-pane fade active show" id="user-edit" role="tabpanel">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">{{ state.User.username }}</h3>
+            </div>
+            <!-- /.card-header -->
+            <form class="form-horizontal" id="users" action="{{ route('admin.update', { id: state.User.id }) }}" method="POST">
+              <div class="card-body">
+                <div class="form-group row">
+                  <label class="col-sm-2">Họ và tên</label>
+                  <input type="text" name="name" value="{{ state.User.name }}" class="form-control col-sm-10">
+                  <input type="text" name="username" value="{{ state.User.username }}" hidden>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2">Mật khẩu mới</label>
+                  <input type="text" name="password" class="form-control col-sm-10">
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2">Link fb</label>
+                  <input type="text" name="link_fb" value="{{ state.User.link_fb }}" class="form-control col-sm-10">
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Quyền</label>
+                  <select class="form-control col-sm-10" name="role">
+                    <option value="admin" {{ state.User.role === 'admin' ? 'selected' : '' }}>admin</option>
+                    <option value="user" {{ state.User.role === 'user' ? 'selected' : '' }}>user</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Sửa</button>
+              </div>
+              <!-- /.card-footer -->
+            </form>
+            <!-- form start -->
+          </div>
+        </div>
+        <div class="tab-pane fade" id="services" role="tabpanel">
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-hover dataTable dtr-inline">
+              <thead>
+              <tr>
+                <th>Dịch vụ</th>
+                <th>tên trang web</th>
+                <th>Giá tiền</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th>Chú thích</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+                @each(s in state.User.sellPage)
+                <tr>
+                  <td>Bán page</td>
+                  <td>{{s.name}}</td>
+                  <td>{{s.price}} đ</td>
+
+                  @if(s.status === 'Chưa xử lý')
+                  <td> <span class="badge bg-danger">{{ s.status }}</span></td>
+                  @elseif(s.status === 'Đang xử lý')
+                  <td> <span class="badge bg-primary">{{ s.status }}</span></td>
+                  @elseif(s.status === 'Chưa thanh toán')
+                  <td><span class="badge bg-warning">{{ s.status }}</span></td>
+                  @else
+                  <td><span class="badge bg-success">{{ s.status }}</span></td>
+                  @endif
+
+                  <td>{{s.created_at}}</td>
+                  <td>{{s.note}}</td>
+                  <td class="text-center py-0 align-middle">
+                    <div class="btn-group btn-group-sm">
+                      <a href="{{ route('admin.user.edit', { id: s.id }) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                      <a href="javascript:destroy('{{ route('admin.delete', { id: s.id }) }}')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </td>
+                </tr>
+                @endeach
+                @each(s in state.User.changName)
+                <tr>
+                  <td>Đổi tên</td>
+                  <td>{{s.name}}</td>
+                  <td>{{s.price}} đ</td>
+
+                  @if(s.status === 'Chưa xử lý')
+                  <td> <span class="badge bg-danger">{{ s.status }}</span></td>
+                  @elseif(s.status === 'Đang xử lý')
+                  <td> <span class="badge bg-primary">{{ s.status }}</span></td>
+                  @elseif(s.status === 'Chưa thanh toán')
+                  <td><span class="badge bg-warning">{{ s.status }}</span></td>
+                  @else
+                  <td><span class="badge bg-success">{{ s.status }}</span></td>
+                  @endif
+
+                  <td>{{s.created_at}}</td>
+                  <td>{{s.note}}</td>
+                  <td class="text-center py-0 align-middle">
+                    <div class="btn-group btn-group-sm">
+                      <a href="{{ route('admin.user.edit', { id: s.id }) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                      <a href="javascript:destroy('{{ route('admin.changeName.delete', { id: s.id }) }}')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </td>
+                </tr>
+                @endeach
+                @each(s in state.User.buffLike)
+                <tr>
+                  <td>Tăng like</td>
+                  <td>{{s.name}}</td>
+                  <td>{{s.price}} đ</td>
+
+                  @if(s.status === 'Chưa xử lý')
+                  <td> <span class="badge bg-danger">{{ s.status }}</span></td>
+                  @elseif(s.status === 'Đang xử lý')
+                  <td> <span class="badge bg-primary">{{ s.status }}</span></td>
+                  @elseif(s.status === 'Chưa thanh toán')
+                  <td><span class="badge bg-warning">{{ s.status }}</span></td>
+                  @else
+                  <td><span class="badge bg-success">{{ s.status }}</span></td>
+                  @endif
+
+                  <td>{{s.created_at}}</td>
+                  <td>{{s.note}}</td>
+                  <td class="text-center py-0 align-middle">
+                    <div class="btn-group btn-group-sm">
+                      <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                      <a href="javascript:destroy('{{ route('admin.buffLike.delete', { id: s.id }) }}')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </td>
+                </tr>
+                @endeach
+
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.card -->
+  </div>
+</div>
+
+@endsection
+
+@section('scripts')
+<script src="/plugins/select2/js/select2.full.min.js"></script>
+<script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="/plugins/inputmask/jquery.masknumber.js"></script>
+<script src="/form.js"></script>
+
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="/plugins/moment/moment.min.js"></script>
+<script src="/index.js"></script>
+<script>
+  $(function () {
+     $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      "order": [[ 4, 'DESC' ]],
+      "iDisplayLength": 5,
+      columnDefs:[
+        // {
+        //   targets:3, render:(data) => {
+        //     return moment(data).format('DD-MM-YYYY hh:mm A');
+        //   }
+        // },
+        {
+          targets:1, render:(data) => {
+            return data.toString().replace(
+              /\B(?=(\d{3})+(?!\d))/g, "."
+            );
+          }
+        },
+     ],
+    })
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+@endsection

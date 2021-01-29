@@ -1,0 +1,84 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<div class="col-sm-12">
+  <ol class="breadcrumb float-sm-left">
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.buff_like.index') }}">Dịch vụ tăng like</a></li>
+    <li class="breadcrumb-item active">Sửa</li>
+  </ol>
+</div>
+<div class="col-md-12 mt-3">
+  <!-- jquery validation -->
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Sửa ({{ state.price }}đ/1 <i class="far fa-thumbs-up"></i>)</h3>
+    </div>
+    <!-- /.card-header -->
+    <form class="form-horizontal" id="buffLike" action="{{ route('admin.buffLike.update', { id: state.buffLike.id }) }}" method="POST">
+      <div class="card-body">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Tài khoản</label>
+          <select class="form-control col-sm-10 select2" name="user_id">
+            @each(u in state.users)
+            <option value="{{ u.id }}" {{ state.buffLike.Users[0].id === u.id ? 'selected' : '' }}>{{ u.name }} - {{ u.username }}</option>
+            @endeach
+          </select>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Tên trang</label>
+          <input type="text" name="name" class="form-control col-sm-10" value="{{ state.buffLike.name }}">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Link trang web</label>
+          <input name="link_page" value="{{ state.buffLike.link_page }}" class="form-control col-sm-10">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Số like cần tăng</label>
+          <input name="need_to_increase" value="{{ state.buffLike.need_to_increase }}" class="form-control col-sm-10" data-thousands=".">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Số tiền</label>
+          <input value="{{ state.buffLike.price }}" name="price"  class="form-control col-sm-10" readonly>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Ghi chú</label>
+          <input type="text" name="note" value="{{ state.buffLike.note }}" class="form-control col-sm-10">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Trạng thái</label>
+          <select class="form-control col-sm-10" name="status">
+            <option value="Chưa xử lý" {{ state.buffLike.status === 'Chưa xử lý' ? 'selected' : '' }}>Chưa xử lý</option>
+            <option value="Đang xử lý" {{ state.buffLike.status === 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
+            <option value="Chưa thanh toán" {{ state.buffLike.status === 'Chưa thanh toán' ? 'selected' : '' }}>Chưa thanh toán</option>
+            <option value="Đã thanh toán" {{ state.buffLike.status === 'Đã thanh toán' ? 'selected' : '' }}>Đã thanh toán</option>
+          </select>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-info">Sửa</button>
+      </div>
+      <!-- /.card-footer -->
+    </form>
+    <!-- form start -->
+  </div>
+</div>
+
+@endsection
+
+@section('scripts')
+<script>
+    $('input[name="price"]').val(({{ state.buffLike.price }}).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+    $('input[name="need_to_increase"]').val(({{ state.buffLike.need_to_increase }}).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+
+    $('input[name="need_to_increase"]').change(function(){
+      const price = this.value.split(".").join("") * ({{ state.price }});
+      $('input[name="price"]').val(price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+  });
+</script>
+<script src="/plugins/select2/js/select2.full.min.js"></script>
+<script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="/plugins/inputmask/jquery.masknumber.js"></script>
+<script src="/form.js"></script>
+@endsection

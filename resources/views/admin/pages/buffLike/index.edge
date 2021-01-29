@@ -1,0 +1,150 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<link rel="stylesheet" href="/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+<div class="col-sm-12">
+  <ol class="breadcrumb float-sm-left">
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
+    <li class="breadcrumb-item active">Dịch vụ tăng like</li>
+  </ol>
+</div>
+
+<div class="col-12 mt-3">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">Dịch vụ tăng like ({{ state.buffLike[0].Services[0].price }}đ/1 <i class="far fa-thumbs-up text-primary"></i>)</h1>
+      <a href="{{ route('admin.buff_like.create') }}" class="btn btn-primary float-right" style="width: 100px"><i class="fas fa-plus-circle"></i></a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <table id="example1" class="table table-bordered table-hover dataTable dtr-inline">
+        <thead>
+        <tr>
+          {{--  <th>ID</th>  --}}
+          <th>Họ tên</th>
+          <th>Tên trang web</th>
+          <th>link page</th>
+          <th>Số like cần tăng</th>
+          <th>giá tiền</th>
+          <th>Ngày tạo</th>
+          <th>Trạng thái</th>
+          <th>Ghi chú</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+          @each(s in state.buffLike)
+          <tr>
+            {{--  <td>{{ s.id }}</td>  --}}
+            <td>{{s.Users[0].name}}</td>
+            <td>{{s.name}}</td>
+            <td><a href="{{s.link_page}}">{{s.link_page}}</a></td>
+            <td>{{s.need_to_increase}} <i class="far fa-thumbs-up text-primary"></i></td>
+            <td>{{s.price}} đ</td>
+            <td>{{s.createdAt}}</td>
+                @if(s.status === 'Chưa xử lý')
+                <td id="status{{s.id}}"> <span class="badge bg-danger">{{ s.status }}</span></td>
+              @elseif(s.status === 'Đang xử lý')
+                <td id="status{{s.id}}"> <span class="badge bg-primary">{{ s.status }}</span></td>
+              @elseif(s.status === 'Chưa thanh toán')
+                <td id="status{{s.id}}"><span class="badge bg-warning">{{ s.status }}</span></td>
+              @else
+                <td id="status{{s.id}}"><span class="badge bg-success">{{ s.status }}</span></td>
+              @endif
+            <td>{{s.note}}</td>
+            <td class="text-center py-0 align-middle">
+              <div class="btn-group btn-group-sm">
+                <a href="{{ route('admin.buff_like.edit', { id: s.id }) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                <a href="javascript:destroy('{{ route('admin.buffLike.delete', { id: s.id }) }}')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Chưa xử lý', 'buffLike' )">Chưa xử lý</a>
+                  <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Đang xử lý', 'buffLike')">Đang xử lý</a>
+                  <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Chưa thanh toán', 'buffLike')">Chưa thanh toán</a>
+                  <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Đã thanh toán', 'buffLike')">Đã thanh toán</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          @endeach
+
+        </tfoot>
+      </table>
+    </div>
+  </div>
+    <!-- /.card-body -->
+  </div>
+</div>
+
+@endsection
+
+
+@section('scripts')
+
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/plugins/jszip/jszip.min.js"></script>
+<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="/plugins/moment/moment.min.js"></script>
+<script src="/index.js"></script>
+<script>
+  $(function () {
+     $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      "order": [[ 5, 'DESC' ]],
+      "iDisplayLength": 5,
+      columnDefs:[
+        {
+          targets:5, render:(data) => {
+            return moment(data).format('DD-MM-YYYY hh:mm A');
+          }
+        },
+        {
+          targets:[3,4], render:(data) => {
+            return data.toString().replace(
+              /\B(?=(\d{3})+(?!\d))/g, "."
+            );
+          }
+        },
+        {
+          targets: [7,2],
+          visible: false
+        }
+     ],
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+
+  if({{ flashMessages.has('success') }}){
+    Toast.fire({
+      icon: 'success',
+      title: '{{ flashMessages.get('success') }}'
+      })
+  }
+</script>
+
+@endsection

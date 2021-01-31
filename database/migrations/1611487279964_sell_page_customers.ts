@@ -1,11 +1,11 @@
-import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+import BaseSchema from "@ioc:Adonis/Lucid/Schema";
 
-export default class SellPageEmployees extends BaseSchema {
-  protected tableName = 'sell_page_employees'
+export default class SellPageCustomer extends BaseSchema {
+  protected tableName = "sell_page_customers";
 
-  public async up () {
+  public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
+      table.increments("id");
       table
         .integer("user_id")
         .unsigned()
@@ -18,11 +18,11 @@ export default class SellPageEmployees extends BaseSchema {
         .references("id")
         .inTable("sell_pages")
         .onDelete("CASCADE");
-      table.timestamps(true)
-    })
+      table.timestamps(true);
+    });
   }
 
-  public async down () {
-    this.schema.dropTable(this.tableName)
+  public async down() {
+    this.schema.dropTable(this.tableName);
   }
 }

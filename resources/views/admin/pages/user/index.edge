@@ -21,13 +21,14 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-      <table id="example1" class="table table-bordered table-hover dataTable dtr-inline">
+      <table id="example1" class="table table-striped table-hover dataTable dtr-inline">
         <thead>
         <tr>
           {{--  <th>ID</th>  --}}
           <th>Họ tên</th>
           <th>Tài khoản</th>
           <th>Link fb</th>
+          <th>Loại khách hàng</th>
           <th>Quyền</th>
           <th>Ngày tạo</th>
           <th></th>
@@ -40,6 +41,7 @@
             <td>{{s.name}}</td>
             <td>{{s.username}}</td>
             <td><a href="{{s.link_fb}}">{{s.link_fb}}</a></td>
+            <td>{{s.customerType[0].name}}</td>
             <td>{{s.role}}</td>
             <td>{{s.createdAt}}</td>
             <td class="text-center py-0 align-middle">
@@ -85,14 +87,18 @@
      $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-      "order": [[ 4, 'DESC' ]],
+      "order": [[ 5, 'DESC' ]],
       "iDisplayLength": 5,
       columnDefs:[
         {
-          targets:4, render:(data) => {
+          targets:5, render:(data) => {
             return moment(data).format('DD-MM-YYYY hh:mm A');
           }
-        }
+        },
+         {
+          targets: 2,
+          visible: false
+        },
      ],
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({

@@ -1,31 +1,45 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import sellPage from 'App/Models/SellPage';
-import User from 'App/Models/User';
+import { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import sellPage from "App/Models/SellPage";
+import User from "App/Models/User";
 import _ from "lodash";
 
 export default class SellPagesController {
-  public async index({ view }: HttpContextContract){
+  public async index({ view, request, session }: HttpContextContract) {
+    const status = request.input("status", "");
     const state = {
-      sellPage: await sellPage.query().preload('Users')
+      sellPage: await sellPage
+        .query()
+        .where((builder) => {
+          if (status) {
+            builder.orWhere("status", "like", status);
+          }
+        })
+        .preload("Users"),
     };
-
+    session.flash("status", status);
     return view.render("admin.pages.sellPage.index", state);
+
   }
 
   public async create({ view }: HttpContextContract) {
+    const users = await User.query().preload("customerType")
     const state = {
-      User: await User.all(),
+      User: users,
+      price: users[0].customerType[0].sell_page_price,
     };
-    return view.render("admin.pages.sellPage.create", state);
+    return view.render("admin.pages.sellPage.create", state );
+    // return {user: state.User};
   }
 
   public async store({ session, request, response }: HttpContextContract) {
-
     const payload = request.only(["name", "number_of_like", "price", "note"]);
     const user = request.only(["user_id"]);
 
     payload.price = parseInt(payload.price.split(".").join(""), 10);
-    payload.number_of_like = parseInt(payload.number_of_like.split(".").join(""), 10);
+    payload.number_of_like = parseInt(
+      payload.number_of_like.split(".").join(""),
+      10
+    );
 
     const sell = new sellPage();
     sell.merge(payload);
@@ -35,7 +49,7 @@ export default class SellPagesController {
     await sell.related("Users").sync([user.user_id]);
     await sell.related("Services").sync([1]);
 
-    session.flash('success', 'Thêm thành công');
+    session.flash("success", "Thêm thành công");
 
     return response.redirect().toRoute("admin.sell_page.index");
   }
@@ -43,22 +57,35 @@ export default class SellPagesController {
   public async edit({ params, view }: HttpContextContract) {
     const sell = await sellPage.find(params.id);
 
-      await sell?.preload("Users");
+    await sell?.preload("Users");
 
-      const state = {
-        sellPage: sell?.toJSON(),
-        users: await User.all(),
-      };
-      return view.render("admin.pages.sellPage.edit", state);
-
+    const state = {
+      sellPage: sell?.toJSON(),
+      users: await User.query().preload("customerType"),
+    };
+    return view.render("admin.pages.sellPage.edit", state);
   }
 
-  public async update({ request, response, session, params }: HttpContextContract) {
-    const payload = request.only(["name", "number_of_like", "price", "status", "note"]);
+  public async update({
+    request,
+    response,
+    session,
+    params,
+  }: HttpContextContract) {
+    const payload = request.only([
+      "name",
+      "number_of_like",
+      "price",
+      "status",
+      "note",
+    ]);
     const user = request.only(["user_id"]);
 
     payload.price = parseInt(payload.price.split(".").join(""), 10);
-    payload.number_of_like = parseInt(payload.number_of_like.split(".").join(""), 10);
+    payload.number_of_like = parseInt(
+      payload.number_of_like.split(".").join(""),
+      10
+    );
 
     const sell = await sellPage.find(params.id);
     sell?.merge(payload);
@@ -66,7 +93,7 @@ export default class SellPagesController {
     await sell?.save();
     await sell?.related("Users").sync([user.user_id]);
 
-    session.flash('success', 'Sửa thành công.');
+    session.flash("success", "Sửa thành công.");
 
     return response.redirect().toRoute("admin.sell_page.index");
   }
@@ -85,8 +112,10 @@ export default class SellPagesController {
 
     await sell?.save();
 
-    return response.redirect().toRoute("admin.sell_page.index");
+    const state = {
+      sellPage: await sellPage.query().preload("Users"),
+    };
+
+    return response.redirect().toRoute("admin.sell_page.index", state);
   }
-
-
 }

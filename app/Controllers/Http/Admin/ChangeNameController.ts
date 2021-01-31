@@ -12,8 +12,10 @@ export default class ChangeNameController {
   }
 
   public async create({ view }: HttpContextContract) {
+    const users = await User.query().preload("customerType");
     const state = {
-      User: await User.all(),
+      User: users,
+      price: users[0].customerType[0].change_name_price,
     };
     return view.render("admin.pages.changeName.create", state);
   }
@@ -45,7 +47,7 @@ export default class ChangeNameController {
 
       const state = {
         changeName: change?.toJSON(),
-        users: await User.all(),
+        users: await User.query().preload("customerType"),
       };
       return view.render("admin.pages.changeName.edit", state);
 

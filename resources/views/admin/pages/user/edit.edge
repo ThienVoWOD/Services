@@ -55,6 +55,14 @@
                     <option value="user" {{ state.User.role === 'user' ? 'selected' : '' }}>user</option>
                   </select>
                 </div>
+                 <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Loại tài khoản</label>
+                  <select class="form-control col-sm-10" name="customer_type_id">
+                    @each(u in state.customerType)
+                    <option value="{{ u.id }}" {{ state.User.customerType[0].id === u.id ? 'selected' : '' }}>{{ u.name }}</option>
+                    @endeach
+                  </select>
+                </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">

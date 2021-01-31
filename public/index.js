@@ -14,9 +14,9 @@
       type: "post",
       success: function(data){
         Toast.fire({
-          icon: 'success',
-          title: ' Thay đổi thành công'
-        })
+          icon: "success",
+          title: " Thay đổi thành công",
+        });
 
         switch (status) {
           case 'Chưa xử lý':

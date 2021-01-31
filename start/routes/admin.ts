@@ -24,6 +24,19 @@ Route.group(() => {
 
   Route.get("/setting", "SettingsController.index").as("setting");
 
+  Route.post(
+    "/user/Service/update",
+    "SettingsController.update_buff_like_price"
+  ).as("service.price.update");
+  Route.post(
+    "/setting/customerType/update/:id",
+    "SettingsController.customer_type_update"
+  ).as("setting.customerType.update");
+  Route.post(
+    "/setting/customerType/create",
+    "SettingsController.customer_type_create"
+  ).as("setting.customerType.create");
+
 })
   .namespace("App/Controllers/Http/Admin")
   .prefix("/admin")

@@ -21,7 +21,7 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-      <table id="example1" class="table table-bordered table-hover dataTable dtr-inline">
+      <table id="example1" class="table table-striped table-hover dataTable dtr-inline">
         <thead>
         <tr>
           {{--  <th>ID</th>  --}}
@@ -46,19 +46,27 @@
             <td><a href="{{s.link_page}}">{{s.link_page}}</a></td>
             <td>{{s.price}} đ</td>
             <td>{{s.createdAt}}</td>
-            <td>
-              <select class="custom-select form-control-border status" name="status" onchange="status('{{ route('admin.changeName.update.status', { id: s.id }) }}', value)">
-                <option value="Chưa xử lý" {{ s.status === 'Chưa xử lý' ? 'selected' : '' }}>Chưa xử lý</option>
-                <option value="Đang xử lý" {{ s.status === 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
-                <option value="Chưa thanh toán" {{ s.status === 'Chưa thanh toán' ? 'selected' : '' }}>Chưa thanh toán</option>
-                <option value="Đã thanh toán" {{ s.status === 'Đã thanh toán' ? 'selected' : '' }}>Đã thanh toán</option>
-              </select>
-            </td>
+              @if(s.status === 'Chưa xử lý')
+                <td id="status{{s.id}}"> <span class="badge bg-danger">{{ s.status }}</span></td>
+              @elseif(s.status === 'Đang xử lý')
+                <td id="status{{s.id}}"> <span class="badge bg-primary">{{ s.status }}</span></td>
+              @elseif(s.status === 'Chưa thanh toán')
+                <td id="status{{s.id}}"><span class="badge bg-warning">{{ s.status }}</span></td>
+              @else
+                <td id="status{{s.id}}"><span class="badge bg-success">{{ s.status }}</span></td>
+              @endif
             <td>{{s.note}}</td>
             <td class="text-center py-0 align-middle">
               <div class="btn-group btn-group-sm">
                 <a href="{{ route('admin.change_name.edit', { id: s.id }) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                 <a href="javascript:destroy('{{ route('admin.changeName.delete', { id: s.id }) }}')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"></a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Chưa xử lý', 'changeName' )">Chưa xử lý</a>
+                  <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Đang xử lý', 'changeName')">Đang xử lý</a>
+                  <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Chưa thanh toán', 'changeName')">Chưa thanh toán</a>
+                  <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Đã thanh toán', 'changeName')">Đã thanh toán</a>
+                </div>
               </div>
             </td>
           </tr>

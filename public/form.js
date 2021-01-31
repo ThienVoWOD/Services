@@ -15,7 +15,7 @@ $(function () {
     },
     messages: {
       name: {
-        required: "Vui lòng nhập tên trang web!",
+        required: "Vui lòng nhập tên page!",
       },
       number_of_like: {
         required: "Vui lòng nhập số like!",
@@ -58,13 +58,13 @@ $(function () {
     },
     messages: {
       name: {
-        required: "Vui lòng nhập tên trang web!",
+        required: "Vui lòng nhập tên page!",
       },
       new_name: {
-        required: "Vui lòng nhập tên mới của web!",
+        required: "Vui lòng nhập tên mới của page!",
       },
       link_page: {
-        required: "Vui lòng nhập link trang web!",
+        required: "Vui lòng nhập link page!",
       },
       price: {
         required: "Vui lòng nhập số tiền!",
@@ -100,10 +100,10 @@ $(function () {
     },
     messages: {
       name: {
-        required: "Vui lòng nhập tên trang web!",
+        required: "Vui lòng nhập tên page!",
       },
       link_page: {
-        required: "Vui lòng nhập link trang web!",
+        required: "Vui lòng nhập link page!",
       },
       need_to_increase: {
         required: "Vui lòng nhập số like cần tăng!",
@@ -147,10 +147,10 @@ $(function () {
       username: {
         required: "Vui lòng nhập tên tài khoản!",
       },
-      password: {
-        required: "Vui lòng nhập mật khẩu!",
-        minlength: "Mật khẩu ít nhất là 5 kí tự!",
-      },
+      // password: {
+      //   required: "Vui lòng nhập mật khẩu!",
+      //   minlength: "Mật khẩu ít nhất là 5 kí tự!",
+      // },
       link_fb: {
         required: "Vui lòng nhập link fb!",
       },

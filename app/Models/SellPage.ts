@@ -7,7 +7,7 @@ const asia = tz(require('timezone/Asia'))
 
 export default class SellPage extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id: number;
 
   @column()
   public name: string;
@@ -27,27 +27,27 @@ export default class SellPage extends BaseModel {
   @column.dateTime({
     autoCreate: true,
     serialize: (value?: DateTime) => {
-      return asia(value, '%d/%m/%Y %H:%M', 'Asia/Ho_Chi_Minh')
+      return asia(value, "%d/%m/%Y %H:%M", "Asia/Ho_Chi_Minh");
     },
   })
   public createdAt: DateTime;
 
   @column.dateTime({
-    autoCreate: true, autoUpdate: true,
+    autoCreate: true,
+    autoUpdate: true,
     serialize: (value?: DateTime) => {
-      return asia(value, '%d/%m/%Y %H:%M', 'Asia/Ho_Chi_Minh')
+      return asia(value, "%d/%m/%Y %H:%M", "Asia/Ho_Chi_Minh");
     },
   })
   public updatedAt: DateTime;
 
   @manyToMany(() => User, {
-    pivotTable: 'sell_page_employees',
+    pivotTable: "sell_page_customers",
   })
-  public Users: ManyToMany<typeof User>
+  public Users: ManyToMany<typeof User>;
 
   @manyToMany(() => Service, {
-    pivotTable: 'sell_page_services',
+    pivotTable: "sell_page_services",
   })
-  public Services: ManyToMany<typeof Service>
-
+  public Services: ManyToMany<typeof Service>;
 }

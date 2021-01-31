@@ -1,10 +1,11 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import CustomerType from "App/Models/CustomerType";
 
 export default class UsersController {
   public async index({ view }: HttpContextContract){
     const state = {
-      User: await User.all()
+      User: await User.query().preload("customerType"),
     };
 
     return view.render("admin.pages.user.index", state);
@@ -12,11 +13,15 @@ export default class UsersController {
   }
 
   public async create({ view }: HttpContextContract) {
-    return view.render("admin.pages.user.create");
+    const state = {
+      customerType: await CustomerType.all(),
+    };
+    return view.render("admin.pages.user.create", state);
   }
 
   public async store({ session, request, response }: HttpContextContract) {
     const payload = request.only(["name", "username", "password", "role", "link_fb"]);
+    const customerType = request.only(["customer_type_id"]);
 
     const check = await User.query().where("username", payload.username);
 
@@ -29,6 +34,7 @@ export default class UsersController {
     const user = new User();
     user.merge(payload);
     await user.save();
+    await user.related("customerType").sync([customerType.customer_type_id]);
     session.flash('success', 'Thêm thành công');
     return response.redirect().toRoute("admin.user.index");
   }
@@ -39,9 +45,11 @@ export default class UsersController {
       await user?.preload("sellPage");
       await user?.preload("buffLike");
       await user?.preload("changeName");
+      await user?.preload("customerType");
 
       const state = {
         User: user?.toJSON(),
+        customerType: await CustomerType.all(),
       };
     return view.render("admin.pages.user.edit", state);
     // return state

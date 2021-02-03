@@ -5,6 +5,8 @@ import User from "App/Models/User";
 import SellPage from "App/Models/SellPage";
 import ChangeName from "App/Models/ChangeName";
 import BuffLike from "App/Models/BuffLike";
+import Inventory from "App/Models/Inventory";
+import Store from "App/Models/Store";
 
 export default class Sample extends BaseSeeder {
   public async run () {
@@ -400,5 +402,62 @@ export default class Sample extends BaseSeeder {
     await service[1]
       .related("buffLike")
       .sync([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+
+        const store = await Store.createMany([
+          {
+            id: 1,
+            name: "Nhà cung cấp like",
+            type: "Like",
+            link_fb: "https://www.facebook.com/",
+          },
+          {
+            id: 2,
+            name: "Nhà cung cấp page",
+            type: "Page",
+            link_fb: "https://www.facebook.com/",
+          },
+          {
+            id: 3,
+            name: "Nhà cung cấp follow",
+            type: "Follow",
+            link_fb: "https://www.facebook.com/",
+          },
+        ]);
+
+        await Inventory.createMany([
+          {
+            id: 1,
+            name: "10k like",
+            price: 1000000,
+          },
+          {
+            id: 2,
+            name: "2k follow",
+            price: 1000000,
+          },
+          {
+            id: 3,
+            name: "3k like",
+            price: 300000,
+          },
+          {
+            id: 4,
+            name: "page pro",
+            price: 3000000,
+          },
+          {
+            id: 5,
+            name: "page default",
+            price: 800000,
+          },
+          {
+            id: 6,
+            name: "1k follow",
+            price: 500000,
+          },
+        ]);
+        await store[0].related("inventory").sync([1, 3]);
+        await store[1].related("inventory").sync([4, 5]);
+        await store[2].related("inventory").sync([2, 6]);
   }
 }

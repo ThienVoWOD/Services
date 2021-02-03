@@ -4,7 +4,7 @@ import User from "App/Models/User";
 import _ from "lodash";
 
 export default class SellPagesController {
-  public async index({ view, request, session }: HttpContextContract) {
+  public async index({ view, request }: HttpContextContract) {
     const status = request.input("status", "");
     const state = {
       sellPage: await sellPage
@@ -16,18 +16,17 @@ export default class SellPagesController {
         })
         .preload("Users"),
     };
-    session.flash("status", status);
-    return view.render("admin.pages.sellPage.index", state);
 
+    return view.render("admin.pages.sellPage.index", state);
   }
 
   public async create({ view }: HttpContextContract) {
-    const users = await User.query().preload("customerType")
+    const users = await User.query().preload("customerType");
     const state = {
       User: users,
       price: users[0].customerType[0].sell_page_price,
     };
-    return view.render("admin.pages.sellPage.create", state );
+    return view.render("admin.pages.sellPage.create", state);
     // return {user: state.User};
   }
 

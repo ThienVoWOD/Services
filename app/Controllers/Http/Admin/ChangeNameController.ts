@@ -3,9 +3,17 @@ import changeName from 'App/Models/ChangeName';
 import User from 'App/Models/User';
 
 export default class ChangeNameController {
-  public async index({ view }: HttpContextContract){
+  public async index({ view, request }: HttpContextContract) {
+    const status = request.input("status", "");
     const state = {
-      changeName: await changeName.query().preload('Users')
+      changeName: await changeName
+        .query()
+        .where((builder) => {
+          if (status) {
+            builder.orWhere("status", "like", status);
+          }
+        })
+        .preload("Users"),
     };
 
     return view.render("admin.pages.changeName.index", state);
@@ -21,8 +29,13 @@ export default class ChangeNameController {
   }
 
   public async store({ session, request, response }: HttpContextContract) {
-
-    const payload = request.only(["name", "new_name", "link_page", "price", "note"]);
+    const payload = request.only([
+      "name",
+      "new_name",
+      "link_page",
+      "price",
+      "note",
+    ]);
     const user = request.only(["user_id"]);
 
     payload.price = parseInt(payload.price.split(".").join(""), 10);
@@ -35,7 +48,7 @@ export default class ChangeNameController {
     await change.related("Users").sync([user.user_id]);
     await change.related("Services").sync([3]);
 
-    session.flash('success', 'Thêm thành công');
+    session.flash("success", "Thêm thành công");
 
     return response.redirect().toRoute("admin.change_name.index");
   }
@@ -43,18 +56,29 @@ export default class ChangeNameController {
   public async edit({ params, view }: HttpContextContract) {
     const change = await changeName.find(params.id);
 
-      await change?.preload("Users");
+    await change?.preload("Users");
 
-      const state = {
-        changeName: change?.toJSON(),
-        users: await User.query().preload("customerType"),
-      };
-      return view.render("admin.pages.changeName.edit", state);
-
+    const state = {
+      changeName: change?.toJSON(),
+      users: await User.query().preload("customerType"),
+    };
+    return view.render("admin.pages.changeName.edit", state);
   }
 
-  public async update({ request, response, session, params }: HttpContextContract) {
-    const payload = request.only(["name", "new_name", "link_page", "price", "status", "note"]);
+  public async update({
+    request,
+    response,
+    session,
+    params,
+  }: HttpContextContract) {
+    const payload = request.only([
+      "name",
+      "new_name",
+      "link_page",
+      "price",
+      "status",
+      "note",
+    ]);
     const user = request.only(["user_id"]);
 
     payload.price = parseInt(payload.price.split(".").join(""), 10);
@@ -65,7 +89,7 @@ export default class ChangeNameController {
     await change?.save();
     await change?.related("Users").sync([user.user_id]);
 
-    session.flash('success', 'Sửa thành công.');
+    session.flash("success", "Sửa thành công.");
 
     return response.redirect().toRoute("admin.change_name.index");
   }
@@ -86,6 +110,4 @@ export default class ChangeNameController {
 
     return response.redirect().toRoute("admin.change_name.index");
   }
-
-
 }

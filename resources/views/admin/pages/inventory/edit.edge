@@ -1,0 +1,61 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<div class="col-sm-12">
+  <ol class="breadcrumb float-sm-left">
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.inventories.index') }}">Kho</a></li>
+    <li class="breadcrumb-item active">Sửa</li>
+  </ol>
+</div>
+<div class="col-md-12 mt-3">
+  <!-- jquery validation -->
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Sửa</h3>
+    </div>
+    <!-- /.card-header -->
+    <form class="form-horizontal" action="{{ route('admin.inventory.update', { id: state.inventory.id }) }}" method="POST">
+      <div class="card-body">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Nhà cung cấp</label>
+          <select class="form-control col-sm-10 select2" name="store_id">
+            @each(u in state.stores)
+            <option value="{{ u.id }}" {{ state.inventory.store[0].id === u.id ? 'selected' : '' }}>{{ u.name }}</option>
+            @endeach
+          </select>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Tên hàng</label>
+          <input type="text" name="name" class="form-control col-sm-10" value="{{ state.inventory.name }}" required>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Số tiền</label>
+          <input value="{{ state.inventory.price }}" name="price"  class="form-control col-sm-10" data-thousands="." required>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Ghi chú</label>
+          <input type="text" name="note" value="{{ state.inventory.note }}" class="form-control col-sm-10">
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-info">Sửa</button>
+      </div>
+      <!-- /.card-footer -->
+    </form>
+    <!-- form start -->
+  </div>
+</div>
+
+@endsection
+
+@section('scripts')
+<script>
+    $('input[name="price"]').val(({{ state.inventory.price }}).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+</script>
+<script src="/plugins/select2/js/select2.full.min.js"></script>
+<script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="/plugins/inputmask/jquery.masknumber.js"></script>
+<script src="/form.js"></script>
+@endsection

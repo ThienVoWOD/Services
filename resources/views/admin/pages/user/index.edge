@@ -91,8 +91,8 @@
       "iDisplayLength": 5,
       columnDefs:[
         {
-          targets:5, render:(data) => {
-            return moment(data).format('DD-MM-YYYY hh:mm A');
+          targets:5, render:(data, type) => {
+            return type === 'sort' ? data : moment(data).format('DD-MM-YYYY hh:mm A');
           }
         },
          {

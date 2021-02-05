@@ -56,18 +56,18 @@
               @else
                 <span class="badge bg-success">{{ s.status }}</span>
               @endif
-              <a class="btn dropdown-toggle float-right" data-toggle="dropdown"></a>
+
+            </td>
+            <td>{{s.note}}</td>
+            <td class="text-center py-0 align-middle">
+              <div class="btn-group btn-group-sm">
+                <a class="btn dropdown-toggle float-right" data-toggle="dropdown"></a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Chưa xử lý', 'changeName' )">Chưa xử lý</a>
                   <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Đang xử lý', 'changeName')">Đang xử lý</a>
                   <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Chưa thanh toán', 'changeName')">Chưa thanh toán</a>
                   <a class="dropdown-item" href="javascript:status({{ s.id }}, 'Đã thanh toán', 'changeName')">Đã thanh toán</a>
                 </div>
-
-            </td>
-            <td>{{s.note}}</td>
-            <td class="text-center py-0 align-middle">
-              <div class="btn-group btn-group-sm">
                 <a href="{{ route('admin.change_name.edit', { id: s.id }) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                 <a href="javascript:destroy('{{ route('admin.changeName.delete', { id: s.id }) }}')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
               </div>

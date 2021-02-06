@@ -7,9 +7,10 @@ Route.group(() => {
   Route.get("/dashboard/invoice/:username", "DashboardController.invoice").as(
     "dashboard.invoice"
   );
-  Route.get("/dashboard/checkout/:username", "DashboardController.checkout").as(
-    "dashboard.checkout"
-  );
+  Route.post(
+    "/dashboard/checkout/:username",
+    "DashboardController.checkout"
+  ).as("dashboard.checkout");
 
   // Bán page
   Route.resource("sellPage", "SellPagesController");

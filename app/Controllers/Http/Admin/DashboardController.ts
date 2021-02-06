@@ -158,6 +158,6 @@ export default class DashboardController {
       await sell?.save();
     }
 
-    return response.redirect().toRoute("admin.dashboard");
+    return true;
   }
 }

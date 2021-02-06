@@ -11,7 +11,7 @@ export default class BuffLikes extends BaseSchema {
       table.integer("need_to_increase").defaultTo(0);
       // table.integer("rate_1like").defaultTo(0);
       table.integer("price").defaultTo(0);
-      table.enum("status", ["Chưa xử lý", "Đang xử lý", "Chưa thanh toán", "Đã thanh toán"]);
+      table.string("status");
       table.string("note");
       table.timestamps(true)
     })

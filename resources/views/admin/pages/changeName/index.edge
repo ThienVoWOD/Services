@@ -53,6 +53,8 @@
                 <span class="badge bg-primary">{{ s.status }}</span>
               @elseif(s.status === 'Chưa thanh toán')
                 <span class="badge bg-warning">{{ s.status }}</span>
+              @elseif(s.status === 'Hủy giao dịch')
+                <span class="badge bg-info">{{ s.status }}</span>
               @else
                 <span class="badge bg-success">{{ s.status }}</span>
               @endif
@@ -138,7 +140,7 @@
           '<option value="Chưa xử lý">Chưa xử lý</option>' +
           '<option value="Đang xử lý">Đang xử lý</option>' +
           '<option value="Chưa thanh toán">Chưa thanh toán</option>' +
-          '<option value="Đã thanh toán">Đã thanh toán</option>' )
+          '<option value="Hủy giao dịch">Hủy giao dịch</option>' )
 
 			} );
 		}

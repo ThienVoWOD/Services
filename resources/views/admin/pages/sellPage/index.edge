@@ -49,6 +49,8 @@
                 <span class='badge bg-danger'>{{ s.status }}</span>
               @elseif(s.status === 'Đang xử lý')
                 <span class="badge bg-primary">{{ s.status }}</span>
+              @elseif(s.status === 'Bảo hành')
+                <span class="badge bg-info">{{ s.status }}</span>
               @elseif(s.status === 'Chưa thanh toán')
                 <span class="badge bg-warning">{{ s.status }}</span>
               @else
@@ -141,7 +143,8 @@
           '<option value="Chưa xử lý">Chưa xử lý</option>' +
           '<option value="Đang xử lý">Đang xử lý</option>' +
           '<option value="Chưa thanh toán">Chưa thanh toán</option>' +
-          '<option value="Đã thanh toán">Đã thanh toán</option>' )
+          '<option value="Đã thanh toán">Đã thanh toán</option>' +
+          '<option value="Bảo hành">Bảo hành</option>' )
 
 			} );
 		}

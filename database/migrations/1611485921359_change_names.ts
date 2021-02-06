@@ -10,7 +10,7 @@ export default class ChangeNames extends BaseSchema {
       table.string("new_name");
       table.string("link_page");
       table.integer("price").defaultTo(0);
-      table.enum("status", ["Chưa xử lý", "Đang xử lý", "Chưa thanh toán", "Đã thanh toán"]);
+      table.string("status");
       table.string("note");
       table.timestamps(true)
     })

@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import buffLike from 'App/Models/buffLike';
+import buffLike from "App/Models/BuffLike";
 import User from 'App/Models/User';
 import Service from 'App/Models/Service';
 

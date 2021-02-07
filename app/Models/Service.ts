@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import sellPage from 'App/Models/SellPage';
-import changeName from 'App/Models/changeName';
+import changeName from "App/Models/ChangeName";
 import BuffLike from 'App/Models/BuffLike';
 
 export default class Service extends BaseModel {

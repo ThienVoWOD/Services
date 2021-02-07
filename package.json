@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "cd build && yarn install --production && node server.js",
+    "start": "cd build && npm install --production && node server.js",
     "start:dev": "node ace serve --watch",
     "build": "node ace build --production",
     "db:reset": "node ace build && node ace migration:rollback && node ace migration:run && node ace db:seed"

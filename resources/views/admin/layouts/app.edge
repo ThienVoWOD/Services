@@ -105,6 +105,14 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('admin.inventories.index') }}" class="nav-link {{ request.url() == '/admin/inventories' ? 'active' : '' }}">
+                <i class="fas fa-sticky-note nav-icon"></i>
+                <p>
+                  Nhập hàng
+                </p>
+              </a>
+            </li>
+                        <li class="nav-item">
+              <a href="{{ route('admin.store.index') }}" class="nav-link {{ request.url() == '/admin/store' ? 'active' : '' }}">
                 <i class="fas fa-store-alt nav-icon"></i>
                 <p>
                   Nhà cung cấp

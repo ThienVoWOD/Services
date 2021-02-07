@@ -9,6 +9,7 @@ export default class CustomerTypes extends BaseSchema {
       table.string("name");
       table.integer("sell_page_price").defaultTo("0");
       table.integer("change_name_price").defaultTo("0");
+      table.integer("buff_like_price").defaultTo("0");
       table.timestamps(true);
     });
   }

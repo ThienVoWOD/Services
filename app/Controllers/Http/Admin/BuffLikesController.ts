@@ -6,6 +6,7 @@ import Service from 'App/Models/Service';
 export default class BuffLikesController {
   public async index({ view, request }: HttpContextContract) {
     const status = request.input("status", "");
+    const users = await User.query().preload("customerType");
     const state = {
       buffLike: await buffLike
         .query()
@@ -15,7 +16,8 @@ export default class BuffLikesController {
           }
         })
         .preload("Users"),
-        service: await Service.find(2),
+      User: users,
+      price: users[0].customerType[0].buff_like_price,
     };
 
     return view.render("admin.pages.buffLike.index", state);

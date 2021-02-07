@@ -64,7 +64,7 @@
                                  <thead>
                                      <tr>
                                          <th>Tên</th>
-                                         <th>Giá bán page</th>
+                                         <th>Giá tăng like</th>
                                          <th>Giá đổi tên</th>
                                          <th></th>
                                      </tr>
@@ -76,7 +76,7 @@
                                           <td><input type="text" class="form-control" value="{{ s.name }}" name="name" required></td>
                                           <td>
                                               <div class="input-group">
-                                                <input type="text" value="{{ (s.sell_page_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}"  name="sell_page_price" class="form-control" data-thousands="." required>
+                                                <input type="text" value="{{ (s.buff_like_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}"  name="buff_like_price" class="form-control" data-thousands="." required>
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text">
                                                     VNĐ
@@ -110,7 +110,7 @@
             </div>
           </div>
   </div>
-    <div class="col-md-6 mt-3">
+    {{--  <div class="col-md-6 mt-3">
 <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
@@ -134,7 +134,7 @@
               </form>
             </div>
             <!-- /.card -->
-  </div>
+  </div>  --}}
 @endsection
 
 @section('scripts')
@@ -142,14 +142,9 @@
   {{--  <script src="/form.js"></script>  --}}
   <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
   <script>
-    $('input[name="price"]').val(({{ state.service.price }}).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
-
-
-
     $(document).ready(function () {
-        $('[name=price]').maskNumber({integer: true});
         $('[name=change_name_price]').maskNumber({integer: true});
-        $('[name=sell_page_price]').maskNumber({integer: true});
+        $('[name=buff_like_price]').maskNumber({integer: true});
   });
       var Toast = Swal.mixin({
       toast: true,

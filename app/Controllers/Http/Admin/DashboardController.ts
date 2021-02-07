@@ -70,6 +70,24 @@ export default class DashboardController {
       }
     });
 
+    const cancel_status = await ChangeName.query()
+      .sum("price as total_price")
+      .count("id as total_count")
+      .where("status", "Hủy giao dịch")
+      .whereBetween("created_at", [start, end + " 23:59:59"]);
+
+    const buffLike_status = await BuffLike.query()
+      .sum("price as total_price")
+      .count("id as total_count")
+      .where("status", "bảo hành")
+      .whereBetween("created_at", [start, end + " 23:59:59"]);
+
+    const sellPage_status = await SellPage.query()
+      .sum("price as total_price")
+      .count("id as total_count")
+      .where("status", "bảo hành")
+      .whereBetween("created_at", [start, end + " 23:59:59"]);
+
     const state = {
       total: {
         buffLike_total,
@@ -79,6 +97,13 @@ export default class DashboardController {
           changeName_total[0].total_price +
           sellPage_total[0].total_price +
           buffLike_total[0].total_price,
+        cancel_status,
+        guarantee: {
+          total_price:
+            buffLike_status[0].total_price + sellPage_status[0].total_price,
+          total_count:
+            buffLike_status[0].total_count + sellPage_status[0].total_count,
+        },
         total_count:
           changeName_total[0].total_count +
           sellPage_total[0].total_count +
@@ -121,7 +146,7 @@ export default class DashboardController {
     // return state
   }
 
-  public async checkout({ response, params }: HttpContextContract) {
+  public async checkout({ params }: HttpContextContract) {
     const user = await User.query()
       .where("username", params.username)
       .preload("changeName", (builder) => {

@@ -66,9 +66,9 @@
 <script src="/form.js"></script>
 <script>
   $('input[name="price"]').val(({{ state.price }}).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
-      $('select[name="user_id"]').change(function(){
-        const price = $(this).children(":selected").attr("class").split(".").join("");
-      $('input[name="price"]').val(price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+  $('select[name="user_id"]').change(function(){
+    const price = $(this).children(":selected").attr("class").split(".").join("");
+    $('input[name="price"]').val(price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
   });
 </script>
 @endsection

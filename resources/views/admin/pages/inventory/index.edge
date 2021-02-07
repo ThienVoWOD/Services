@@ -10,7 +10,7 @@
 <div class="col-sm-12">
   <ol class="breadcrumb float-sm-left">
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
-    <li class="breadcrumb-item active">Kho</li>
+    <li class="breadcrumb-item active">Nhập hàng</li>
   </ol>
 </div>
 
@@ -19,9 +19,6 @@
               <div class="card-header">
                 <h3 class="card-title">Danh sách hàng đã nhập</h3>
                 <div class="card-tools">
-                  <a href="{{ route('admin.store.index') }}" type="button" class="btn btn-tool text-primary">
-                    Nhà cung cấp
-                  </a>
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
@@ -92,10 +89,28 @@
               <!-- /.info-box-content -->
             </div>
             <div class="info-box mb-3">
-              <span class="info-box-icon"><i class="fas fa-tag"></i></span>
+              <span class="info-box-icon"><h4>like</h4></span>
               <div class="info-box-content">
-                <span class="info-box-text">Số lượng</span>
-                <span class="info-box-number">{{ state.inventory_total[0].total_count }}</span>
+                <span class="info-box-text">Tổng tiền: <b>{{ (state.like.total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</b></span>
+                <span class="info-box-text">Số lượng: <b>{{ state.like.total_count }}</b></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+
+            <div class="info-box mb-3">
+              <span class="info-box-icon"><h4>page</h4></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Tổng tiền: <b>{{ (state.page.total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</b></span>
+                <span class="info-box-text">Số lượng: <b>{{ state.page.total_count }}</b></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+
+             <div class="info-box mb-3">
+              <span class="info-box-icon"><h4>follow</h4></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Tổng tiền: <b>{{ (state.follow.total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</b></span>
+                <span class="info-box-text">Số lượng: <b>{{ state.follow.total_count }}</b></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -103,8 +118,8 @@
             <div class="info-box mb-3">
               <span class="info-box-icon"><i class="fas fa-hand-holding-usd"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">Tổng tiền</span>
-                <span class="info-box-number">{{ state.inventory_total[0].total_price == null ? 0 :  (state.inventory_total[0].total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</span>
+                <span class="info-box-text">Tổng tiền: <b>{{ state.inventory_total[0].total_price == null ? 0 :  (state.inventory_total[0].total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</b></span>
+                <span class="info-box-text">Số lượng: <b>{{ state.inventory_total[0].total_count }}</b></span>
               </div>
               <!-- /.info-box-content -->
             </div>

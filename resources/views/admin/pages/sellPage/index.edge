@@ -13,18 +13,20 @@
   </ol>
 </div>
 
-<div class="col-12 mt-3">
+<div class="col-sm-12 mt-3">
+  <div class="col-md-6 float-left"><button class="btn btn-primary col-md-12" id="btn-form">Thêm mới dịch vụ bán page</button></div>
+   <div class="col-md-6 float-left"><button class="btn btn-primary col-md-12" id="btn-table">Danh sách dịch vụ bán page</button></div>
+</div>
+
+<div class="col-12 mt-3" id="table">
   <div class="card">
     <div class="card-header">
       <h1 class="card-title">Dịch vụ bán page</h1>
-      <a href="{{ route('admin.sell_page.create') }}" class="btn btn-primary float-right" style="width: 100px"><i class="fas fa-plus-circle"></i></a>
     </div>
-    <!-- /.card-header -->
     <div class="card-body">
       <table id="example1" class="table table-striped table-hover dataTable dtr-inline">
         <thead>
         <tr>
-          {{--  <th>ID</th>  --}}
           <th>Họ tên</th>
           <th>Tên page</th>
           <th>Số like</th>
@@ -38,7 +40,6 @@
         <tbody>
           @each(s in state.sellPage)
           <tr>
-            {{--  <td>{{ s.id }}</td>  --}}
             <td>{{s.Users[0].name}}</td>
             <td>{{s.name}}</a></td>
             <td>{{s.number_of_like}} <i class="far fa-thumbs-up"></i></td>
@@ -81,7 +82,49 @@
       </table>
     </div>
   </div>
-    <!-- /.card-body -->
+  </div>
+</div>
+<div class="col-md-12 mt-3" id="form">
+  <!-- jquery validation -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title text-center">Thêm mới</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form class="form-horizontal" id="sellPage" action="{{ route('admin.sell_page.store') }}" method="POST">
+      <div class="card-body">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Tài khoản</label>
+          <select class="form-control col-sm-10 select2" name="user_id">
+            @each(u in state.User)
+            <option value="{{ u.id }}">{{ u.name }} - {{ u.username }}</option>
+            @endeach
+          </select>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Tên page</label>
+          <input type="text" name="name" class="form-control col-sm-10">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Số like</label>
+          <input name="number_of_like" class="form-control col-sm-10" data-thousands=".">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Số tiền</label>
+          <input name="price" class="form-control col-sm-10" data-thousands=".">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Ghi chú</label>
+          <input type="text" name="note" class="form-control col-sm-10">
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-info">Thêm</button>
+      </div>
+      <!-- /.card-footer -->
+    </form>
   </div>
 </div>
 
@@ -100,6 +143,10 @@
 <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="/plugins/moment/moment.min.js"></script>
 <script src="/index.js"></script>
+<script src="/plugins/select2/js/select2.full.min.js"></script>
+<script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="/plugins/inputmask/jquery.masknumber.js"></script>
+<script src="/form.js"></script>
 <script>
 
   $(function () {
@@ -150,6 +197,16 @@
 		}
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+          $("#table").hide();
+    $("#btn-table").click(function () {
+      $("#table").show();
+      $("#form").hide();
+    });
+
+    $("#btn-form").click(function () {
+      $("#form").show();
+      $("#table").hide();
+    });
   });
 
   if({{ flashMessages.has('success') }}){
@@ -162,3 +219,4 @@
 </script>
 
 @endsection
+

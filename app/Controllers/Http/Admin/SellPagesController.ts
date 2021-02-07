@@ -15,6 +15,7 @@ export default class SellPagesController {
           }
         })
         .preload("Users"),
+      User: await User.query(),
     };
 
     return view.render("admin.pages.sellPage.index", state);

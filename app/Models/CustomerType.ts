@@ -20,6 +20,9 @@ export default class CustomerType extends BaseModel {
   @column()
   public change_name_price: number;
 
+  @column()
+  public buff_like_price: number;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 

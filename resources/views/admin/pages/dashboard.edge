@@ -105,7 +105,7 @@
               <!-- ./card-body -->
               <div class="card-footer">
                 <div class="row">
-                  <div class="col-sm-3 col-6">
+                  <div class="col-sm-4 col-6">
                     <div class="description-block border-right">
                       <span class="description-text">tăng like</span>
                       <h5 class="description-header">{{ total.buffLike_total[0].total_price == null ? 0 : (total.buffLike_total[0].total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</h5>
@@ -114,7 +114,7 @@
                     <!-- /.description-block -->
                   </div>
                   <!-- /.col -->
-                  <div class="col-sm-3 col-6">
+                  <div class="col-sm-4 col-6">
                     <div class="description-block border-right">
                       <span class="description-text">đổi tên</span>
                       <h5 class="description-header">{{ total.changeName_total[0].total_price == null ? 0 :  (total.changeName_total[0].total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</h5>
@@ -123,8 +123,8 @@
                     <!-- /.description-block -->
                   </div>
                   <!-- /.col -->
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block border-right">
+                  <div class="col-sm-4 col-6">
+                    <div class="description-block">
                       <span class="description-text">bán page</span>
                       <h5 class="description-header">{{ total.sellPage_total[0].total_price == null ? 0 : (total.sellPage_total[0].total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</h5>
                       <span class="description-percentage">số lượng: {{ total.sellPage_total[0].total_count }}</span>
@@ -132,7 +132,25 @@
                     <!-- /.description-block -->
                   </div>
                   <!-- /.col -->
-                  <div class="col-sm-3 col-6">
+                  <div class="col-sm-4 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-text">Hủy giao dịch</span>
+                      <h5 class="description-header">{{ (total.cancel_status[0].total_price == null ? 0 : total.cancel_status[0].total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</h5>
+                      <span class="description-percentage">số lượng: {{ total.cancel_status[0].total_count }}</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-4 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-text">Bảo hành</span>
+                      <h5 class="description-header">{{ (total.guarantee.total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</h5>
+                      <span class="description-percentage">số lượng: {{ total.guarantee.total_count }}</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-4 col-6">
                     <div class="description-block">
                       <span class="description-text">Tổng</span>
                       <h5 class="description-header">{{ (total.total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</h5>
@@ -140,6 +158,8 @@
                     </div>
                     <!-- /.description-block -->
                   </div>
+
+
                 </div>
                 <!-- /.row -->
               </div>

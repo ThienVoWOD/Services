@@ -89,7 +89,7 @@
               <!-- /.info-box-content -->
             </div>
             <div class="info-box mb-3">
-              <span class="info-box-icon"><h4>like</h4></span>
+              <span class="info-box-icon"><h4>Like</h4></span>
               <div class="info-box-content">
                 <span class="info-box-text">Tổng tiền: <b>{{ (state.like.total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</b></span>
                 <span class="info-box-text">Số lượng: <b>{{ state.like.total_count }}</b></span>
@@ -98,7 +98,7 @@
             </div>
 
             <div class="info-box mb-3">
-              <span class="info-box-icon"><h4>page</h4></span>
+              <span class="info-box-icon"><h4>Page</h4></span>
               <div class="info-box-content">
                 <span class="info-box-text">Tổng tiền: <b>{{ (state.page.total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</b></span>
                 <span class="info-box-text">Số lượng: <b>{{ state.page.total_count }}</b></span>
@@ -107,7 +107,7 @@
             </div>
 
              <div class="info-box mb-3">
-              <span class="info-box-icon"><h4>follow</h4></span>
+              <span class="info-box-icon"><h4>Follow</h4></span>
               <div class="info-box-content">
                 <span class="info-box-text">Tổng tiền: <b>{{ (state.follow.total_price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} đ</b></span>
                 <span class="info-box-text">Số lượng: <b>{{ state.follow.total_count }}</b></span>
@@ -216,7 +216,7 @@
      initComplete: function () {
 			this.api().columns([5]).every( function () {
         var column = this;
-        var select = $('<a data-toggle="modal" data-target="#modal-default" class="btn btn-secondary buttons-collection col-md-3 float-left"><i class="fas fa-plus-circle"></i></a>')
+        var select = $('<a data-toggle="modal" data-target="#modal-default" class="btn btn-secondary buttons-collection col-md-3 float-left mr-1"><i class="fas fa-plus-circle"></i></a>')
         .appendTo('#example1_wrapper .col-md-6:eq(0)')
 
 			} );

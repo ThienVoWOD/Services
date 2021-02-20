@@ -116,7 +116,7 @@
           <input type="text" name="link_page" class="form-control col-sm-10">
         </div>
         <div class="form-group row">
-          <label class="col-sm-2">price</label>
+          <label class="col-sm-2">Giá tiền</label>
           <input name="price" class="form-control col-sm-10" readonly>
         </div>
         <div class="form-group row">
@@ -180,7 +180,7 @@
      initComplete: function () {
 			this.api().columns([5]).every( function () {
         var column = this;
-				var select = $('<select class="form-control input-sm col-md-4 float-left"><option value="">-Tìm theo trạng thái-</option></select>').appendTo('#example1_wrapper .col-md-6:eq(0)')
+				var select = $('<select class="form-control input-sm col-md-4 float-left mr-1"><option value="">-Tìm theo trạng thái-</option></select>').appendTo('#example1_wrapper .col-md-6:eq(0)')
 	      .on( 'change', function () {
            var val = $.fn.dataTable.util.escapeRegex($(this).val());
           window.location.href = "/admin/changeName?status=" + val ;

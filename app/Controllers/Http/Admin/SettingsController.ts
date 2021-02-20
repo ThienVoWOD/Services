@@ -62,7 +62,7 @@ export default class SettingsController {
   }: HttpContextContract) {
     const payload = request.only([
       "name",
-      "sell_page_price",
+      "buff_like_price",
       "change_name_price",
     ]);
 
@@ -73,8 +73,8 @@ export default class SettingsController {
       return response.redirect().back();
     }
 
-    payload.sell_page_price = parseInt(
-      payload.sell_page_price.split(".").join(""),
+    payload.buff_like_price = parseInt(
+      payload.buff_like_price.split(".").join(""),
       10
     );
     payload.change_name_price = parseInt(

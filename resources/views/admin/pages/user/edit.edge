@@ -93,17 +93,19 @@
                   <td>Bán page</td>
                   <td>{{s.name}}</td>
                   <td>{{s.price}} đ</td>
-
+                  <td>
                   @if(s.status === 'Chưa xử lý')
-                  <td> <span class="badge bg-danger">{{ s.status }}</span></td>
+                    <span class="badge bg-danger">{{ s.status }}</span>
                   @elseif(s.status === 'Đang xử lý')
-                  <td> <span class="badge bg-primary">{{ s.status }}</span></td>
+                    <span class="badge bg-primary">{{ s.status }}</span>
+                  @elseif(s.status === 'Bảo hành')
+                    <span class="badge bg-info">{{ s.status }}</span>
                   @elseif(s.status === 'Chưa thanh toán')
-                  <td><span class="badge bg-warning">{{ s.status }}</span></td>
+                 <span class="badge bg-warning">{{ s.status }}</span>
                   @else
-                  <td><span class="badge bg-success">{{ s.status }}</span></td>
+                    <span class="badge bg-success">{{ s.status }}</span>
                   @endif
-
+                  </td>
                   <td>{{s.created_at}}</td>
                   <td>{{s.note}}</td>
                   <td class="text-center py-0 align-middle">
@@ -118,17 +120,19 @@
                   <td>Đổi tên</td>
                   <td>{{s.name}}</td>
                   <td>{{s.price}} đ</td>
-
+                  <td>
                   @if(s.status === 'Chưa xử lý')
-                  <td> <span class="badge bg-danger">{{ s.status }}</span></td>
+                   <span class="badge bg-danger">{{ s.status }}</span>
                   @elseif(s.status === 'Đang xử lý')
-                  <td> <span class="badge bg-primary">{{ s.status }}</span></td>
+                  <span class="badge bg-primary">{{ s.status }}</span>
                   @elseif(s.status === 'Chưa thanh toán')
-                  <td><span class="badge bg-warning">{{ s.status }}</span></td>
+                  <span class="badge bg-warning">{{ s.status }}</span>
+                  @elseif(s.status === 'Hủy giao dịch')
+                <span class="badge bg-info">{{ s.status }}</span>
                   @else
-                  <td><span class="badge bg-success">{{ s.status }}</span></td>
+                  <span class="badge bg-success">{{ s.status }}</span>
                   @endif
-
+                    </td>
                   <td>{{s.created_at}}</td>
                   <td>{{s.note}}</td>
                   <td class="text-center py-0 align-middle">
@@ -143,17 +147,19 @@
                   <td>Tăng like</td>
                   <td>{{s.name}}</td>
                   <td>{{s.price}} đ</td>
-
+                  <td>
                   @if(s.status === 'Chưa xử lý')
-                  <td> <span class="badge bg-danger">{{ s.status }}</span></td>
+                  <span class="badge bg-danger">{{ s.status }}</span>
                   @elseif(s.status === 'Đang xử lý')
-                  <td> <span class="badge bg-primary">{{ s.status }}</span></td>
+                  <span class="badge bg-primary">{{ s.status }}</span>
                   @elseif(s.status === 'Chưa thanh toán')
-                  <td><span class="badge bg-warning">{{ s.status }}</span></td>
+                  <span class="badge bg-warning">{{ s.status }}</span>
+                  @elseif(s.status === 'Bảo hành')
+                <span class="badge bg-info">{{ s.status }}</span>
                   @else
-                  <td><span class="badge bg-success">{{ s.status }}</span></td>
+                  <span class="badge bg-success">{{ s.status }}</span>
                   @endif
-
+                  </td>
                   <td>{{s.created_at}}</td>
                   <td>{{s.note}}</td>
                   <td class="text-center py-0 align-middle">

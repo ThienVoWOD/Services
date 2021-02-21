@@ -52,25 +52,26 @@ export default class UsersController {
         customerType: await CustomerType.all(),
       };
     return view.render("admin.pages.user.edit", state);
-    // return state
   }
 
   public async update({ request, response, session, params }: HttpContextContract) {
     const password = request.only(["password"]);
+    const customerType = request.only(["customer_type_id"]);
     if(password.password === ""){
       const payload = request.only(["name", "link_fb", "role", "username"]);
       const user = await User.find(params.id);
       user?.merge(payload);
       await user?.save();
+      await user?.related("customerType").sync([customerType.customer_type_id]);
     }else{
       const payload = request.only(["name", "link_fb", "role", "username", "password"]);
       const user = await User.find(params.id);
       user?.merge(payload);
       await user?.save();
+      await user?.related("customerType").sync([customerType.customer_type_id]);
     }
 
-    session.flash('success', 'Sửa thành công.');
-
+    session.flash("success", "Sửa thành công.");
     return response.redirect().toRoute("admin.user.index");
   }
 

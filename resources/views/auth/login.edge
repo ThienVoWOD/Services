@@ -103,6 +103,12 @@
       title: '{{ flashMessages.get('auth.errors.password') }}'
       })
   }
+  if({{ flashMessages.has('error') }}){
+    Toast.fire({
+      icon: 'error',
+      title: '{{ flashMessages.get('error') }}'
+      })
+  }
 </script>
 
 </body>

@@ -3,7 +3,7 @@ import User from 'App/Models/User'
 import CustomerType from "App/Models/CustomerType";
 
 export default class UsersController {
-  public async index({ view }: HttpContextContract){
+  public async index({ view }: HttpContextContract) {
     const state = {
       User: await User.query().preload("customerType"),
     };
@@ -20,14 +20,20 @@ export default class UsersController {
   }
 
   public async store({ session, request, response }: HttpContextContract) {
-    const payload = request.only(["name", "username", "password", "role", "link_fb"]);
+    const payload = request.only([
+      "name",
+      "username",
+      "password",
+      "role",
+      "link_fb",
+    ]);
     const customerType = request.only(["customer_type_id"]);
 
     const check = await User.query().where("username", payload.username);
 
-    if(check.length > 0){
-      session.flash('error', 'Tài khoản này đã tồn tại');
-      session.flash('user', payload);
+    if (check.length > 0) {
+      session.flash("error", "Tài khoản này đã tồn tại");
+      session.flash("user", payload);
       return response.redirect().back();
     }
 
@@ -35,36 +41,47 @@ export default class UsersController {
     user.merge(payload);
     await user.save();
     await user.related("customerType").sync([customerType.customer_type_id]);
-    session.flash('success', 'Thêm thành công');
+    session.flash("success", "Thêm thành công");
     return response.redirect().toRoute("admin.user.index");
   }
 
   public async edit({ view, params }: HttpContextContract) {
     const user = await User.find(params.id);
 
-      await user?.preload("sellPage");
-      await user?.preload("buffLike");
-      await user?.preload("changeName");
-      await user?.preload("customerType");
+    await user?.preload("sellPage");
+    await user?.preload("buffLike");
+    await user?.preload("changeName");
+    await user?.preload("customerType");
 
-      const state = {
-        User: user?.toJSON(),
-        customerType: await CustomerType.all(),
-      };
+    const state = {
+      User: user?.toJSON(),
+      customerType: await CustomerType.all(),
+    };
     return view.render("admin.pages.user.edit", state);
   }
 
-  public async update({ request, response, session, params }: HttpContextContract) {
+  public async update({
+    request,
+    response,
+    session,
+    params,
+  }: HttpContextContract) {
     const password = request.only(["password"]);
     const customerType = request.only(["customer_type_id"]);
-    if(password.password === ""){
+    if (password.password === "") {
       const payload = request.only(["name", "link_fb", "role", "username"]);
       const user = await User.find(params.id);
       user?.merge(payload);
       await user?.save();
       await user?.related("customerType").sync([customerType.customer_type_id]);
-    }else{
-      const payload = request.only(["name", "link_fb", "role", "username", "password"]);
+    } else {
+      const payload = request.only([
+        "name",
+        "link_fb",
+        "role",
+        "username",
+        "password",
+      ]);
       const user = await User.find(params.id);
       user?.merge(payload);
       await user?.save();
@@ -75,9 +92,23 @@ export default class UsersController {
     return response.redirect().toRoute("admin.user.index");
   }
 
-  public async destroy({ params }: HttpContextContract) {
-    const user = await User.find(params.id);
-    await user?.delete();
+  public async destroy({ params, session }: HttpContextContract) {
+    const user = await User.query()
+      .where("id", params.id)
+      .preload("sellPage")
+      .preload("buffLike")
+      .preload("changeName");
+    if (
+      user[0]?.sellPage.length > 0 ||
+      user[0]?.buffLike.length > 0 ||
+      user[0]?.changeName.length > 0
+    ) {
+      console.log("k xóa");
+      return false;
+    }
+    console.log("xóa");
+    const user_delete = await User.find(params.id);
+    await user_delete?.delete();
     return true;
   }
 }

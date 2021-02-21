@@ -62,21 +62,12 @@ Swal.fire({
   allowOutsideClick: () => !Swal.isLoading()
 }).then(async (result) => {
   if (result.isConfirmed) {
-    if (result.value) {
-      Swal.fire(
-        'Xong!',
-        'Xóa thành công.',
-        'success'
-      ).then(() => {
+    if (result.value === "true") {
+      Swal.fire("Xong!", "Xóa thành công.", "success").then(() => {
         window.location.reload();
       });
-    }
-     else {
-      Swal.fire(
-        'Lỗi!',
-        'Xóa thất bại.',
-        'error'
-      );
+    } else {
+      Swal.fire("Lỗi!", "Xóa thất bại.", "error");
     }
   }
 })

@@ -92,7 +92,7 @@ export default class UsersController {
     return response.redirect().toRoute("admin.user.index");
   }
 
-  public async destroy({ params, session }: HttpContextContract) {
+  public async destroy({ params }: HttpContextContract) {
     const user = await User.query()
       .where("id", params.id)
       .preload("sellPage")

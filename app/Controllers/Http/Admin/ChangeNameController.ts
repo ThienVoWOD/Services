@@ -4,8 +4,9 @@ import User from 'App/Models/User';
 
 export default class ChangeNameController {
   public async index({ view, request }: HttpContextContract) {
-    const status = request.input("status", "");
+    const status = request.input("status");
     const users = await User.query().preload("customerType");
+    const check = status === undefined ? false : true;
     const state = {
       changeName: await changeName
         .query()
@@ -16,7 +17,7 @@ export default class ChangeNameController {
         })
         .preload("Users"),
       User: users,
-      price: users[0].customerType[0].change_name_price,
+      check,
     };
 
     return view.render("admin.pages.changeName.index", state);
@@ -52,7 +53,6 @@ export default class ChangeNameController {
     await change.related("Services").sync([3]);
 
     session.flash("success", "Thêm thành công");
-
     return response.redirect().toRoute("admin.change_name.index");
   }
 

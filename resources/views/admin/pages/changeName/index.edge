@@ -99,7 +99,7 @@
         <div class="form-group row">
           <label class="col-sm-2">Tài khoản</label>
           <select class="form-control col-sm-10 select2" name="user_id" required>
-            <option value="">-- chọn --</option>
+            <option value="">--- Chọn tài khoản ---</option>
             @each(u in state.User)
             <option class="{{ u.customerType[0].change_name_price }}" value="{{ u.id }}">{{ u.name }} - {{ u.username }}</option>
             @endeach
@@ -198,7 +198,7 @@
 			} );
 		}
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $("#table").hide();
+    $("#table").hide();
     $("#btn-table").click(function () {
       $("#table").show();
       $("#form").hide();
@@ -208,6 +208,11 @@
       $("#form").show();
       $("#table").hide();
     });
+
+        if({{ state.check }}){
+      $("#table").show();
+      $("#form").hide();
+  }
   });
 
   if({{ flashMessages.has('success') }}){
@@ -217,7 +222,6 @@
       })
   }
 
-    $('input[name="price"]').val(({{ state.price }}).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
       $('select[name="user_id"]').change(function(){
         const price = $(this).children(":selected").attr("class").split(".").join("");
       $('input[name="price"]').val(price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))

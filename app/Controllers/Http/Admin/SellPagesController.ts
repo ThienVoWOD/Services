@@ -5,7 +5,8 @@ import _ from "lodash";
 
 export default class SellPagesController {
   public async index({ view, request }: HttpContextContract) {
-    const status = request.input("status", "");
+    const status = request.input("status");
+    const check = status === undefined ? false : true;
     const state = {
       sellPage: await sellPage
         .query()
@@ -16,6 +17,7 @@ export default class SellPagesController {
         })
         .preload("Users"),
       User: await User.query(),
+      check,
     };
 
     return view.render("admin.pages.sellPage.index", state);

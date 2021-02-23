@@ -96,7 +96,8 @@
       <div class="card-body">
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Tài khoản</label>
-          <select class="form-control col-sm-10 select2" name="user_id">
+          <select class="form-control col-sm-10 select2" name="user_id" required>
+            <option value="">--- Chọn tài khoản ---</option>
             @each(u in state.User)
             <option value="{{ u.id }}">{{ u.name }} - {{ u.username }}</option>
             @endeach
@@ -206,6 +207,10 @@
       $("#form").show();
       $("#table").hide();
     });
+        if({{ state.check }}){
+      $("#table").show();
+      $("#form").hide();
+  }
   });
 
   if({{ flashMessages.has('success') }}){

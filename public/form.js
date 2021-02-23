@@ -1,9 +1,12 @@
 
 //  validation trang bán page
 $(function () {
-  $('#sellPage').validate({
+  $("#sellPage").validate({
     rules: {
       name: {
+        required: true,
+      },
+      user_id: {
         required: true,
       },
       number_of_like: {
@@ -17,6 +20,9 @@ $(function () {
       name: {
         required: "Vui lòng nhập tên page!",
       },
+      user_id: {
+        required: "Vui lòng chọn tài khoản!",
+      },
       number_of_like: {
         required: "Vui lòng nhập số like!",
       },
@@ -24,26 +30,29 @@ $(function () {
         required: "Vui lòng nhập số tiền!",
       },
     },
-    errorElement: 'span',
+    errorElement: "span",
     errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback text-right');
-      element.closest('.form-group').append(error);
+      error.addClass("invalid-feedback text-right");
+      element.closest(".form-group").append(error);
     },
     highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
+      $(element).addClass("is-invalid");
     },
     unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
+      $(element).removeClass("is-invalid");
+    },
   });
 });
 
 
 //  validation trang đổi tên
 $(function () {
-  $('#changeName').validate({
+  $("#changeName").validate({
     rules: {
       name: {
+        required: true,
+      },
+      user_id: {
         required: true,
       },
       new_name: {
@@ -59,6 +68,9 @@ $(function () {
     messages: {
       name: {
         required: "Vui lòng nhập tên page!",
+      },
+      user_id: {
+        required: "Vui lòng chọn tài khoản!",
       },
       new_name: {
         required: "Vui lòng nhập tên mới của page!",
@@ -70,25 +82,28 @@ $(function () {
         required: "Vui lòng nhập số tiền!",
       },
     },
-    errorElement: 'span',
+    errorElement: "span",
     errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback text-right');
-      element.closest('.form-group').append(error);
+      error.addClass("invalid-feedback text-right");
+      element.closest(".form-group").append(error);
     },
     highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
+      $(element).addClass("is-invalid");
     },
     unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
+      $(element).removeClass("is-invalid");
+    },
   });
 });
 
 //  validation trang đổi tên
 $(function () {
-  $('#buffLike').validate({
+  $("#buffLike").validate({
     rules: {
       name: {
+        required: true,
+      },
+      user_id: {
         required: true,
       },
       link_page: {
@@ -102,6 +117,9 @@ $(function () {
       name: {
         required: "Vui lòng nhập tên page!",
       },
+      user_id: {
+        required: "Vui lòng chọn tài khoản!",
+      },
       link_page: {
         required: "Vui lòng nhập link page!",
       },
@@ -109,17 +127,17 @@ $(function () {
         required: "Vui lòng nhập số like cần tăng!",
       },
     },
-    errorElement: 'span',
+    errorElement: "span",
     errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback text-right');
-      element.closest('.form-group').append(error);
+      error.addClass("invalid-feedback text-right");
+      element.closest(".form-group").append(error);
     },
     highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
+      $(element).addClass("is-invalid");
     },
     unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
+      $(element).removeClass("is-invalid");
+    },
   });
 });
 

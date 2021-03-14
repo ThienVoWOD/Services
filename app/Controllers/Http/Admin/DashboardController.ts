@@ -21,16 +21,19 @@ export default class DashboardController {
     const changeName_total = await ChangeName.query()
       .sum("price as total_price")
       .count("id as total_count")
+      .whereNot("status", "Hủy giao dịch")
       .whereBetween("created_at", [start, end + " 23:59:59"]);
 
     const buffLike_total = await BuffLike.query()
       .sum("price as total_price")
       .count("id as total_count")
+      .whereNot("status", "Bảo hành")
       .whereBetween("created_at", [start, end + " 23:59:59"]);
 
     const sellPage_total = await SellPage.query()
       .sum("price as total_price")
       .count("id as total_count")
+      .whereNot("status", "Bảo hành")
       .whereBetween("created_at", [start, end + " 23:59:59"]);
 
     const user = await User.query()

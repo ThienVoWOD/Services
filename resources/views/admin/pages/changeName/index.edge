@@ -97,25 +97,27 @@
       <input name="price" hidden>
       <div class="card-body">
         <div class="form-group row">
-          <label class="col-sm-2">Tài khoản</label>
-          <select class="form-control col-sm-10 select2" name="user_id" required>
+          <label class="col-sm-2 ">Tài khoản</label>
+         
+          <select class="form-control select2" name="user_id" required>
             <option value="">--- Chọn tài khoản ---</option>
             @each(u in state.User)
             <option class="{{ u.customerType[0].change_name_price }}" value="{{ u.id }}">{{ u.name }} - {{ u.username }}</option>
             @endeach
           </select>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2">Tên page cũ</label>
-          <input type="text" name="name" class="form-control col-sm-10">
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2">Tên page mới</label>
-          <input type="text" name="new_name" class="form-control col-sm-10">
+        
         </div>
         <div class="form-group row">
           <label class="col-sm-2">Link page</label>
           <input type="text" name="link_page" class="form-control col-sm-10">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Tên cũ</label>
+          <input type="text" name="name" class="form-control col-sm-10">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Tên mới</label>
+          <input type="text" name="new_name" class="form-control col-sm-10">
         </div>
         <div class="form-group row">
           <label class="col-sm-2">Giá tiền</label>
